@@ -31,7 +31,7 @@ app.get("/get_current_user",async function (req, res) {
   const ans = {}
   if (result.data?.user){
     ans.id = result.data.user.id
-    ans.name = result.data.user.first_name + " " + (result.data.user.last_name?result.data.user.last_name:"")
+    ans.name = result.data.user.first_name + " " + (result.data.user.last_name ? result.data.user.last_name.slice(0, 1) :"")
   
   }
   res.send(ans);
@@ -40,7 +40,7 @@ app.get("/get_current_user",async function (req, res) {
 
 
 app.get("/get_friends", async function (req, res) {
-  console.log(req.headers.authorization);
+ // console.log(req.headers.authorization);
   if (!req.headers.authorization) {
     res.status(400).send("access_token is required");
     return;
@@ -57,11 +57,30 @@ app.get("/get_friends", async function (req, res) {
     result.data.friends.map((friend) => {
       ans.push({
         id: friend.id,
-        name: friend.first_name + " " + (friend.last_name?friend.last_name:""),
+        name: friend.first_name + " " + (friend.last_name?friend.last_name.slice(0,1):""),
       });
     })
   }
   res.send(ans);
+});
+
+app.post("/create_expense", async function (req, res) {
+ // console.log(req.headers.authorization);
+  if (!req.headers.authorization) {
+    res.status(400).send("access_token is required");
+    return;
+  }
+  //console.log(req.body);
+  let result = await axios.get(
+    "https://secure.splitwise.com/api/v3.0/create_expense",
+    {
+      headers: { Authorization: req.headers.authorization },
+      params: req.body.expense,
+    }
+  );
+  console.log("test")
+  console.log(result.data);
+  res.send(result.data);
 });
 
 
