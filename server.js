@@ -17,7 +17,7 @@ app.use(cors())
 
 app.get("/get_current_user",async function (req, res) {
 
-  console.log(req.headers.authorization)
+  // console.log(req.headers.authorization)
   if (!req.headers.authorization) {
     res.status(400).send("access_token is required");
     return;
@@ -61,6 +61,11 @@ app.get("/get_friends", async function (req, res) {
       });
     })
   }
+  //sort ans based on name
+  ans.sort((a,b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+  })
   res.send(ans);
 });
 
@@ -78,8 +83,8 @@ app.post("/create_expense", async function (req, res) {
       params: req.body.expense,
     }
   );
-  console.log("test")
-  console.log(result.data);
+  // console.log("test")
+  // console.log(result.data);
   res.send(result.data);
 });
 
