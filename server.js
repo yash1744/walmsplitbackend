@@ -31,7 +31,7 @@ app.get("/get_current_user",async function (req, res) {
   const ans = {}
   if (result.data?.user){
     ans.id = result.data.user.id
-    ans.name = result.data.user.first_name + " " + (result.data.user.last_name ? result.data.user.last_name.slice(0, 1) :"")
+    ans.name = result.data.user.first_name + " " + (result.data.user.last_name ? result.data.user.last_name.slice(0, 1)  :"")
   
   }
   res.send(ans);
@@ -86,6 +86,45 @@ app.post("/create_expense", async function (req, res) {
   // console.log("test")
   // console.log(result.data);
   res.send(result.data);
+});
+
+// Get Groups
+
+app.get("/get_groups", async function (req, res) {
+  // console.log(req.headers.authorization);
+  if (!req.headers.authorization) {
+    res.status(400).send("access_token is required");
+    return;
+  }
+  let result = await axios.get(
+    "https://secure.splitwise.com/api/v3.0/get_groups",
+    {
+      headers: { Authorization: req.headers.authorization },
+    }
+  );
+  const groups = [];
+
+  if (result.data?.groups) {
+    result.data.groups.map((group) => {
+      groups.push({
+        id: group.id,
+        name: group.name,
+        // group.members.
+        members: group.members.map((member) => {
+          return {
+            id: member.id,
+            name: member.first_name + " " + (member.last_name?member.last_name.slice(0,1):""),
+          };
+        }),
+      });
+    })
+  }
+  //sort ans based on name
+  groups.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+  })
+  res.send(groups);
 });
 
 
