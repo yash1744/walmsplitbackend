@@ -23,7 +23,7 @@ app.get("/", async function (req, res) {
   } catch (error) {
     return res.status(500).json(error);
   }
-  
+
 });
 
 /**
@@ -35,7 +35,7 @@ app.get("/", async function (req, res) {
 app.get("/get_current_user", async function (req, res) {
   console.log(req.headers.authorization);
   if (!req.headers.authorization) {
-    res.status(400).json({error:"access_token is required"});
+    res.status(400).json({ error: "access_token is required" });
     return;
   }
   let result = await axios.get(
@@ -54,7 +54,7 @@ app.get("/get_current_user", async function (req, res) {
         ? result.data.user.last_name.slice(0, 1)
         : "");
   }
-  res.status(200).json({ message:user });
+  res.status(200).json({ message: user });
 });
 
 /**
@@ -91,11 +91,16 @@ app.get("/get_friends", async function (req, res) {
         });
       });
     }
+    //sort ans based on name
+    ans.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+    });
     res.send(ans);
   } catch (error) {
     return res.status(500).send(error);
   }
-  
+
 });
 
 app.post("/create_expense", async function (req, res) {
@@ -115,6 +120,56 @@ app.post("/create_expense", async function (req, res) {
   console.log("test");
   console.log(result.data);
   res.send(result.data);
+});
+
+/**
+ * Get /get_groups
+ * @summary Get groups of the logged in user
+ * @return {object} 200 - An array of groups
+ * @return {Error}  default - Unexpected error
+ * @param {string} access_token.query.required - access_token
+ * 
+ */
+
+
+app.get("/get_groups", async function (req, res) {
+  try {
+    if (!req.headers.authorization) {
+      res.status(400).send("access_token is required");
+      return;
+    }
+    let result = await axios.get(
+      "https://secure.splitwise.com/api/v3.0/get_groups",
+      {
+        headers: { Authorization: req.headers.authorization },
+      }
+    );
+    const groups = [];
+
+    if (result.data?.groups) {
+      result.data.groups.map((group) => {
+        groups.push({
+          id: group.id,
+          name: group.name,
+          // group.members.
+          members: group.members.map((member) => {
+            return {
+              id: member.id,
+              name: member.first_name + " " + (member.last_name ? member.last_name.slice(0, 1) : ""),
+            };
+          }),
+        });
+      })
+    }
+    //sort ans based on name
+    groups.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+    })
+    res.send(groups);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 });
 
 // app.listen(3001);
