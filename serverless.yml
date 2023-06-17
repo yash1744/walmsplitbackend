@@ -1,4 +1,4 @@
-service: sample-app
+service: walmart-split-backend
 provider:
   name: aws
   runtime: nodejs18.x
@@ -7,7 +7,7 @@ provider:
   memorySize: 128
 functions:
   app:
-    handler: app/app.handler
+    handler: serverless-app/app.handler
     events: 
       - http: 
           path: /

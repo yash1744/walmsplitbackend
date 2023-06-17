@@ -1,5 +1,4 @@
 var express = require("express");
-const serverless = require("serverless-http");
 var cors = require("cors");
 var app = express();
 var cookieParser = require("cookie-parser");
@@ -54,7 +53,7 @@ app.get("/get_current_user", async function (req, res) {
         ? result.data.user.last_name.slice(0, 1)
         : "");
   }
-  res.status(200).json({ message: user });
+  res.status(200).json(user);
 });
 
 /**
@@ -172,6 +171,7 @@ app.get("/get_groups", async function (req, res) {
   }
 });
 
-// app.listen(3001);
-// console.log("Server running on port %d", 3001);
-module.exports.handler = serverless(app);
+app.listen(3001);
+console.log("Server running on port %d", 3001);
+
+module.exports = app;
