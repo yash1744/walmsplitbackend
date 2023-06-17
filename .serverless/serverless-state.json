@@ -175,7 +175,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/sample-app/dev/1680073310989-2023-03-29T07:01:50.989Z/sample-app.zip"
+                "S3Key": "serverless/sample-app/dev/1687023847257-2023-06-17T17:44:07.257Z/sample-app.zip"
               },
               "Handler": "app/app.handler",
               "Runtime": "nodejs18.x",
@@ -193,14 +193,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionE0tfiy074Ysl3jczN8kuVLiBj0V16pZa5dZPkHFBms": {
+          "AppLambdaVersionH90sl3cbVCSlPqRGN1ialExPKwOnKFx4LSXKBeVc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "eBhEqET5IpG7TjewanLBKUsEqDrufsNappAw5ZxDen4="
+              "CodeSha256": "gt9bmAuPcGgV/If8ItGbLG4br/KS7vgGLwUhmMSxv/4="
             }
           },
           "ApiGatewayRestApi": {
@@ -418,7 +418,7 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1680073308723": {
+          "ApiGatewayDeployment1687023845036": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -483,7 +483,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionE0tfiy074Ysl3jczN8kuVLiBj0V16pZa5dZPkHFBms"
+              "Ref": "AppLambdaVersionH90sl3cbVCSlPqRGN1ialExPKwOnKFx4LSXKBeVc"
             },
             "Export": {
               "Name": "sls-sample-app-dev-AppLambdaFunctionQualifiedArn"
@@ -661,7 +661,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionE0tfiy074Ysl3jczN8kuVLiBj0V16pZa5dZPkHFBms"
+        "versionLogicalId": "AppLambdaVersionH90sl3cbVCSlPqRGN1ialExPKwOnKFx4LSXKBeVc"
       }
     },
     "configValidationMode": "warn",
@@ -680,7 +680,7 @@
     "artifact": "/Users/yash1744/personal projects/walmsplitbackend/.serverless/sample-app.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/sample-app/dev/1680073310989-2023-03-29T07:01:50.989Z",
+    "artifactDirectoryName": "serverless/sample-app/dev/1687023847257-2023-06-17T17:44:07.257Z",
     "artifact": "sample-app.zip"
   }
 }
