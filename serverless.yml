@@ -7,7 +7,7 @@ provider:
   memorySize: 128
 functions:
   app:
-    handler: serverless-app/app.handler
+    handler: serverless-app.handler
     events: 
       - http: 
           path: /
