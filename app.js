@@ -92,8 +92,8 @@ app.get("/get_friends", async function (req, res) {
     }
     //sort ans based on name
     ans.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+      if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
     });
     res.send(ans);
   } catch (error) {
